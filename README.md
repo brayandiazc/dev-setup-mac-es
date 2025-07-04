@@ -1,28 +1,57 @@
-# 🍎 Configuración de Entorno de Desarrollo para macOS
+# ⚙️ dev-setup-mac-es
 
-Este repositorio contiene una colección de scripts automatizados para configurar un entorno de desarrollo completo en macOS. Todos los scripts están diseñados para ser ejecutados secuencialmente y configurar herramientas esenciales para el desarrollo de software.
+Instaladores automatizados para configurar un entorno completo de desarrollo en macOS, usando herramientas modernas y gestionadas por versión: `zsh`, `git`, `ssh`, `ruby`, `node`, `python`, `kubernetes`, `terraform`.
 
-## 📋 Prerrequisitos
+Proyecto modular y ordenado que permite instalar y configurar cada tecnología paso a paso con scripts independientes, seguros y comentados.
+
+## 🖼️ Vista Previa (estructura del proyecto)
+
+```bash
+.
+├── README.md
+└── scripts
+    ├── 01-instalacion-base.sh
+    ├── 02-instalar-zsh.sh
+    ├── 03-configurar-zsh.sh
+    ├── 04-instalar-git.sh
+    ├── 05-instalar-ssh.sh
+    ├── 06-instalar-ruby.sh
+    ├── 07-instalar-node.sh
+    ├── 08-instalar-python.sh
+    ├── 09-instalar-kubernetes.sh
+    └── 10-instalar-terraform.sh
+```
+
+## ⚙️ Requisitos
 
 - macOS (compatible con Apple Silicon y Intel)
 - Conexión a internet
 - Terminal con permisos de administrador
+- `tree` (opcional, para visualizar estructura)
 
-## 🚀 Instalación Rápida
-
-### Opción 1: Instalación Automática Completa
+## 🚀 Instalación paso a paso
 
 ```bash
-# Clonar el repositorio
-git clone <url-del-repositorio>
+git clone https://github.com/brayandiazc/dev-setup-mac-es.git
 cd dev-setup-mac-es
+chmod +x scripts/*.sh  # Otorga permisos de ejecución a todos los scripts
+```
 
-# Dar permisos de ejecución a todos los scripts
-chmod +x scripts/*.sh
+- Ejecuta el script base (instala Homebrew y herramientas esenciales):
 
-# Ejecutar todos los scripts en orden
+```bash
 ./scripts/01-instalacion-base.sh
+```
+
+- Luego puedes ejecutar, uno por uno, los scripts que necesites:
+
+```bash
 ./scripts/02-instalar-zsh.sh
+```
+
+### 💡 Cierra la terminal, vuelve a abrirla y luego ejecuta
+
+```bash
 ./scripts/03-configurar-zsh.sh
 ./scripts/04-instalar-git.sh
 ./scripts/05-instalar-ssh.sh
@@ -33,181 +62,157 @@ chmod +x scripts/*.sh
 ./scripts/10-instalar-terraform.sh
 ```
 
-### Opción 2: Instalación Selectiva
+## 🔎 Scripts incluidos
 
-Puedes ejecutar solo los scripts que necesites según tus requerimientos de desarrollo.
+| Nº  | Script                   | Descripción                                                     | Documentación                              |
+| --- | ------------------------ | --------------------------------------------------------------- | ------------------------------------------ |
+| 01  | `instalacion-base.sh`    | Instala Homebrew y prepara el entorno base                      | -                                          |
+| 02  | `instalar-zsh.sh`        | Instala `zsh` como shell predeterminada                         | [Zsh](https://zsh.sourceforge.io/)         |
+| 03  | `configurar-zsh.sh`      | Instala Oh My Zsh + plugins (tras reiniciar terminal)           | [Oh My Zsh](https://ohmyz.sh/)             |
+| 04  | `instalar-git.sh`        | Instala Git y configura usuario, correo, y plantilla de commit  | [Git](https://git-scm.com/)                |
+| 05  | `instalar-ssh.sh`        | Genera claves SSH para autenticación con GitHub                 | [SSH](https://www.openssh.com/)            |
+| 06  | `instalar-ruby.sh`       | Instala Ruby usando `rbenv` con versión seleccionable           | [rbenv](https://github.com/rbenv/rbenv)    |
+| 07  | `instalar-node.sh`       | Instala Node.js usando `nodenv` con versión estable por defecto | [nodenv](https://github.com/nodenv/nodenv) |
+| 08  | `instalar-python.sh`     | Instala Python con `pyenv` y paquetes esenciales                | [pyenv](https://github.com/pyenv/pyenv)    |
+| 09  | `instalar-kubernetes.sh` | Instala kubectl y minikube para desarrollo local                | [Kubernetes](https://kubernetes.io/)       |
+| 10  | `instalar-terraform.sh`  | Instala Terraform desde repositorio oficial de HashiCorp        | [Terraform](https://www.terraform.io/)     |
 
-## 📦 Herramientas Instaladas
+## 📋 Funcionalidades detalladas por script
 
-### 🔧 **01-instalacion-base.sh** - Configuración Base
+### 🔧 **01-instalacion-base.sh**
 
-- **Homebrew**: Gestor de paquetes para macOS
-- **Xcode Command Line Tools**: Herramientas de desarrollo de Apple
-- **Herramientas esenciales**: git, wget, curl, openssl, readline, libyaml, libffi, xz, zlib, sqlite3, libpq, cmake, tree, pkg-config, llvm, imagemagick, libxml2, libxslt, libvips, ffmpeg, webp, poppler
+- Instala Homebrew si no está presente
+- Configura el PATH para Homebrew (Apple Silicon por defecto)
+- Verifica e instala Xcode Command Line Tools
+- Instala herramientas esenciales de desarrollo (git, wget, curl, openssl, readline, libyaml, libffi, xz, zlib, sqlite3, libpq, cmake, tree, pkg-config, llvm, imagemagick, libxml2, libxslt, libvips, ffmpeg, webp, poppler)
+- Actualiza Homebrew y sugiere limpieza de paquetes
 
-### 🖥️ **02-instalar-zsh.sh** - Shell Avanzado
+### 🐚 **02-instalar-zsh.sh**
 
-- **Zsh**: Shell mejorado
-- **Oh My Zsh**: Framework para gestionar la configuración de Zsh
+- Verifica si Zsh está instalado e instala con Homebrew si es necesario
+- Cambia el shell por defecto a Zsh si no lo es
+- Instala Oh My Zsh en modo no interactivo
+- Verifica la instalación y muestra la versión
 
-### ⚙️ **03-configurar-zsh.sh** - Configuración Avanzada de Zsh
+### ⚙️ **03-configurar-zsh.sh**
 
-- **Plugins de sintaxis**: zsh-syntax-highlighting
-- **Autocompletado**: zsh-autosuggestions
-- **Plugins adicionales**: aws, azure, bundler, colorize, docker, docker-compose, gcloud, gem, git, heroku, history-substring-search, node, nodenv, npm, pip, postgres, pyenv, python, rails, react-native, rbenv, ruby, vscode
+- Instala plugins adicionales: `zsh-syntax-highlighting` y `zsh-autosuggestions`
+- Configura plugins en `.zshrc` (aws, azure, bundler, colorize, docker, docker-compose, gcloud, gem, git, heroku, history-substring-search, node, nodenv, npm, pip, postgres, pyenv, python, rails, react-native, rbenv, ruby, vscode)
+- Añade sources de plugins a `.zshrc`
+- Proporciona instrucciones para aplicar cambios
 
-### 🔧 **04-instalar-git.sh** - Control de Versiones
+### 📝 **04-instalar-git.sh**
 
-- **Git**: Sistema de control de versiones
-- **Configuración global**: Usuario, email, colores, rama principal
-- **Plantilla de commits**: Configuración opcional de mensajes de commit
+- Verifica si Git está instalado e instala con Homebrew si es necesario
+- Configura colores en la salida de Git
+- Solicita y configura nombre de usuario y correo electrónico
+- Establece 'main' como rama principal por defecto
+- Opcional: descarga y configura plantilla de mensajes de commit desde GitHub
+- Muestra la configuración final
 
-### 🔐 **05-instalar-ssh.sh** - Seguridad y Conectividad
+### 🔐 **05-instalar-ssh.sh**
 
-- **SSH**: Protocolo de conexión segura
-- **Configuración de claves**: Generación y configuración de claves SSH
+- Verifica si ya existe una clave SSH y permite sobrescribir
+- Genera nueva clave RSA de 4096 bits con comentario personalizable
+- Inicia el agente SSH y añade la clave privada
+- Copia la clave pública al portapapeles automáticamente
+- Proporciona instrucciones para añadir la clave a GitHub
+- Prueba la conexión SSH con GitHub
 
-### 💎 **06-instalar-ruby.sh** - Desarrollo Ruby
+### 💎 **06-instalar-ruby.sh**
 
-- **rbenv**: Gestor de versiones de Ruby
-- **Ruby**: Lenguaje de programación
-- **Bundler**: Gestor de dependencias de Ruby
-- **RubyGems**: Sistema de paquetes de Ruby
+- Verifica si Homebrew está instalado
+- Instala `rbenv` y `ruby-build` usando Homebrew
+- Configura `rbenv` en `.zprofile`
+- Muestra versiones disponibles de Ruby
+- Permite seleccionar versión específica de Ruby
+- Instala la versión seleccionada y la establece como global
+- Instala Bundler y actualiza RubyGems
+- Proporciona instrucciones para actualizar rbenv
 
-### 🟢 **07-instalar-node.sh** - Desarrollo JavaScript/Node.js
+### 🟢 **07-instalar-node.sh**
 
-- **nodenv**: Gestor de versiones de Node.js
-- **Node.js**: Runtime de JavaScript
-- **npm**: Gestor de paquetes de Node.js
+- Verifica si Homebrew está instalado
+- Instala `nodenv` y `node-build` usando Homebrew
+- Configura `nodenv` en `.zprofile`
+- Muestra versiones recientes disponibles de Node.js
+- Permite seleccionar versión específica de Node.js
+- Instala la versión seleccionada y la establece como global
+- Proporciona instrucciones para actualizar nodenv
 
-### 🐍 **08-instalar-python.sh** - Desarrollo Python
+### 🐍 **08-instalar-python.sh**
 
-- **pyenv**: Gestor de versiones de Python
-- **pyenv-virtualenv**: Plugin para entornos virtuales
-- **Python**: Lenguaje de programación
-- **pip**: Gestor de paquetes de Python
+- Verifica si Homebrew está instalado
+- Instala `pyenv` y `pyenv-virtualenv` usando Homebrew
+- Configura `pyenv` en `.zprofile`
+- Muestra versiones recientes disponibles de Python
+- Permite seleccionar versión específica de Python
+- Instala la versión seleccionada y la establece como global
+- Verifica la instalación con `python --version` y `pip --version`
+- Proporciona instrucciones para actualizar pyenv
 
-### 🚀 **09-instalar-kubernetes.sh** - Orquestación de Contenedores
+### ☸️ **09-instalar-kubernetes.sh**
 
-- **kubectl**: Cliente de línea de comandos para Kubernetes
-- **minikube**: Clúster local de Kubernetes para desarrollo
+- Verifica si Homebrew está instalado
+- Instala `kubectl` con Homebrew
+- Instala `minikube` con Homebrew
+- Verifica las instalaciones
+- Proporciona comandos para iniciar clúster local y habilitar addons
+- Incluye ejemplos de configuración de addons útiles
 
-### 🌍 **10-instalar-terraform.sh** - Infraestructura como Código
+### 🌍 **10-instalar-terraform.sh**
 
-- **Terraform**: Herramienta de infraestructura como código de HashiCorp
+- Verifica si Homebrew está instalado
+- Añade el tap oficial de HashiCorp
+- Instala Terraform desde el repositorio oficial de HashiCorp
+- Verifica la instalación
+- Proporciona ejemplos de uso básico
 
-## 📝 Notas Importantes
+## 🧪 Recomendación de uso
 
-### 🔄 Recarga de Terminal
+Usa los scripts en orden secuencial solo si estás configurando un sistema desde cero.
+También puedes ejecutar solo los que necesites de forma independiente.
 
-Después de ejecutar los scripts de instalación de lenguajes (Ruby, Node.js, Python, Java), **es necesario cerrar y abrir la terminal** o ejecutar:
+### 🔄 Orden recomendado para instalación completa:
+
+1. **Base**: `01-instalacion-base.sh`
+2. **Shell**: `02-instalar-zsh.sh` → Reiniciar terminal → `03-configurar-zsh.sh`
+3. **Control de versiones**: `04-instalar-git.sh` → `05-instalar-ssh.sh`
+4. **Lenguajes**: `06-instalar-ruby.sh` → `07-instalar-node.sh` → `08-instalar-python.sh`
+5. **Orquestación**: `09-instalar-kubernetes.sh`
+6. **Infraestructura**: `10-instalar-terraform.sh`
+
+## 🔗 Enlaces útiles
+
+### Documentación oficial de herramientas:
+
+- [Zsh](https://zsh.sourceforge.io/) - Shell avanzado
+- [Oh My Zsh](https://ohmyz.sh/) - Framework para Zsh
+- [Git](https://git-scm.com/) - Control de versiones
+- [rbenv](https://github.com/rbenv/rbenv) - Gestor de versiones de Ruby
+- [nodenv](https://github.com/nodenv/nodenv) - Gestor de versiones de Node.js
+- [pyenv](https://github.com/pyenv/pyenv) - Gestor de versiones de Python
+- [Kubernetes](https://kubernetes.io/) - Orquestación de contenedores
+- [Terraform](https://www.terraform.io/) - Infraestructura como código
+
+### Recursos adicionales:
+
+- [GitHub SSH Keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh) - Configurar SSH con GitHub
+- [Homebrew](https://brew.sh/) - Gestor de paquetes para macOS
+- [Minikube](https://minikube.sigs.k8s.io/) - Kubernetes local
+
+## 🖇️ Contribuye
 
 ```bash
-source ~/.zprofile
+# Fork → Crea rama → Cambios → Commit → Pull Request
 ```
 
-### 🛠️ Actualizaciones
-
-Para mantener las herramientas actualizadas:
-
-```bash
-# Homebrew
-brew update && brew upgrade
-
-# rbenv y ruby-build
-brew upgrade rbenv ruby-build
-
-# nodenv y node-build
-brew upgrade nodenv node-build
-
-# pyenv y pyenv-virtualenv
-brew upgrade pyenv pyenv-virtualenv
-
-
-```
-
-### 🔧 Verificación de Instalaciones
-
-Puedes verificar que todo esté funcionando correctamente con:
-
-```bash
-# Verificar versiones instaladas
-ruby -v
-node -v
-python --version
-kubectl version --client
-terraform -version
-```
-
-## 🎯 Casos de Uso
-
-### Desarrollo Web Full-Stack
-
-1. Ejecuta los scripts 01-04 para la configuración base
-2. Ejecuta 06-08 para Ruby, Node.js y Python
-3. Configura tu editor preferido (VS Code, Sublime Text, etc.)
-
-### Desarrollo DevOps/Cloud
-
-1. Ejecuta todos los scripts en orden
-2. Configura credenciales de AWS, Azure, GCP según necesites
-3. Configura kubectl para tus clústeres de Kubernetes
-
-## 🤝 Contribuciones
-
-Si encuentras algún problema o quieres agregar nuevas herramientas, por favor:
-
-1. Abre un issue describiendo el problema o la mejora
-2. Crea un fork del repositorio
-3. Desarrolla tu solución en una rama separada
-4. Envía un pull request
+Lee [CONTRIBUTING.md](.github/CONTRIBUTING.md) para más detalles.
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
-## 👨‍💻 Autor
-
-**Brayan Diaz C** - Desarrollador de software y DevOps Engineer
+MIT — ver [LICENSE](LICENSE.md)
 
 ---
 
-## 🆘 Solución de Problemas
-
-### Error: "Homebrew no está instalado"
-
-Si el script de instalación base falla, puedes instalar Homebrew manualmente:
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-### Error: "Permission denied"
-
-Asegúrate de dar permisos de ejecución a los scripts:
-
-```bash
-chmod +x scripts/*.sh
-```
-
-### Error: "Xcode Command Line Tools"
-
-Si tienes problemas con las herramientas de línea de comandos:
-
-```bash
-xcode-select --install
-```
-
-### Problemas con PATH
-
-Si las herramientas no se encuentran después de la instalación:
-
-```bash
-source ~/.zprofile
-# o
-source ~/.zshrc
-```
-
----
-
-**¡Disfruta de tu nuevo entorno de desarrollo en macOS! 🎉**
+⌨️ con ❤️ por [Brayan Diaz C](https://github.com/brayandiazc)
