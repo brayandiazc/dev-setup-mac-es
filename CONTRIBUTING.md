@@ -1,33 +1,25 @@
 # Guía de Contribución
 
-¡Gracias por tu interés en contribuir a **dev-setup-mac-es**! Esta guía describe el flujo de trabajo, las convenciones de los scripts y el proceso de Pull Requests.
+¡Gracias por tu interés en contribuir a **dev-setup-mac-es**! Esta guía describe el flujo de trabajo, los estándares de código y el proceso de Pull Requests.
 
 ## Tabla de Contenidos
 
 - [Configuración del Entorno](#configuración-del-entorno)
 - [Flujo de Trabajo](#flujo-de-trabajo)
-- [Convenciones de los Scripts](#convenciones-de-los-scripts)
+- [Estándares de Código](#estándares-de-código)
 - [Commits y Mensajes](#commits-y-mensajes)
 - [Pull Requests](#pull-requests)
 - [Revisión de Código](#revisión-de-código)
-- [Pruebas](#pruebas)
+- [Verificación](#verificación)
 
 ## Configuración del Entorno
 
-No hay dependencias que instalar: basta con un macOS con `bash`/`zsh`. Clona el repositorio y da permisos de ejecución a los scripts:
+No hay dependencias que instalar para editar los scripts. Para probarlos con seguridad, usa un entorno desechable (una cuenta de usuario nueva, una VM de macOS o un Mac de pruebas) — evita ejecutar cambios sin probar directamente sobre tu sistema principal, ya que los scripts usan `sudo` e instalan software.
 
-```bash
-git clone https://github.com/brayandiazc/dev-setup-mac-es.git
-cd dev-setup-mac-es
-chmod +x scripts/*.sh
-```
+Herramientas recomendadas para contribuir (`brew install shellcheck shfmt`):
 
-Se recomienda tener [`shellcheck`](https://www.shellcheck.net/) instalado para revisar los scripts localmente:
-
-```bash
-brew install shellcheck
-shellcheck scripts/*.sh
-```
+- [`shellcheck`](https://www.shellcheck.net/) — análisis estático de scripts de shell.
+- [`shfmt`](https://github.com/mvdan/sh) — formateo consistente de scripts.
 
 ## Flujo de Trabajo
 
@@ -38,44 +30,52 @@ Usamos un flujo **Git Flow** simplificado.
 | Rama       | Propósito                                        | Origen    | Destino            |
 | ---------- | ------------------------------------------------ | --------- | ------------------ |
 | `main`     | Código estable y publicado.                      | —         | —                  |
-| `feat/*`   | Nuevo script o funcionalidad.                    | `main`    | `main`             |
-| `fix/*`    | Corrección de un script.                         | `main`    | `main`             |
-| `docs/*`   | Cambios solo de documentación.                   | `main`    | `main`             |
-| `chore/*`  | Tareas de mantenimiento, tooling, configuración. | `main`    | `main`             |
+| `develop`  | Integración de cambios. Pre-release.             | `main`    | `main`             |
+| `feat/*`   | Nueva funcionalidad o script.                    | `develop` | `develop`          |
+| `fix/*`    | Corrección de bug no urgente.                    | `develop` | `develop`          |
+| `hotfix/*` | Corrección urgente.                              | `main`    | `main` y `develop` |
+| `docs/*`   | Cambios solo de documentación.                   | `develop` | `develop`          |
+| `chore/*`  | Tareas de mantenimiento, tooling, configuración. | `develop` | `develop`          |
 
-### Flujo de una contribución
+### Flujo de una funcionalidad
 
 ```bash
-# 1. Parte de main actualizado
-git checkout main
-git pull origin main
+# 1. Parte de develop actualizado
+git checkout develop
+git pull origin develop
 
 # 2. Crea tu rama
 git checkout -b feat/nombre-descriptivo
 
 # 3. Trabaja y commitea (ver formato abajo)
 git add .
-git commit -m "feat: agrega script para instalar X"
+git commit -m "feat: agrega X"
 
-# 4. Sube tu rama y abre un PR hacia main
+# 4. Sube tu rama y abre un PR hacia develop
 git push origin feat/nombre-descriptivo
 ```
 
 ### Nombrado de ramas
 
-- En minúsculas, con prefijo de tipo y descripción en `kebab-case`:
-  `feat/instalar-go`, `fix/ruta-postgres`, `docs/actualizar-readme`.
+- En minúsculas, con prefijo de tipo y descripción en `kebab-case`: `feat/instalar-golang`, `fix/ruta-rbenv`, `docs/actualizar-readme`.
 
-## Convenciones de los Scripts
+## Estándares de Código
 
-Los scripts siguen las [convenciones de shell scripting](docs/conventions/shell-scripts.md) del proyecto. En resumen:
+### Estilo de los scripts
 
-- **Nombre**: `NN-verbo-herramienta.sh` en `kebab-case`, con numeración de dos dígitos que refleja el orden de instalación (p. ej. `09-instalar-java.sh`).
-- **Cabecera**: comienza con `#!/bin/bash`, `set -e` y un bloque de comentario con descripción, autor y fecha.
-- **Idempotencia**: verifica antes de instalar; no falles si la herramienta ya existe.
-- **Mensajes claros**: informa al usuario de cada paso y de las acciones manuales pendientes.
-- **Sin secretos**: nunca incluyas credenciales, tokens ni claves. Ver [SECURITY.md](SECURITY.md).
-- Ejecuta `shellcheck` sobre tu script antes de abrir el PR.
+- Shebang portable: `#!/usr/bin/env bash`.
+- Aborta ante errores: `set -e` al inicio de cada script.
+- Indentación de **2 espacios**, finales de línea **LF**, codificación **UTF-8** (ver [`.editorconfig`](.editorconfig)).
+- Un script por herramienta, con prefijo numérico de orden: `NN-instalar-<herramienta>.sh`.
+- Scripts **idempotentes** siempre que sea posible: comprueba si algo ya está instalado antes de reinstalarlo.
+- Mensajes de progreso claros para el usuario y para las acciones manuales pendientes.
+
+### Comentarios
+
+- Comenta el _por qué_, no el _qué_. El código debe explicarse solo.
+- Encabeza cada script con una breve descripción, autor y fecha.
+
+Más detalle en [`docs/conventions/shell-scripts.md`](docs/conventions/shell-scripts.md).
 
 ## Commits y Mensajes
 
@@ -89,14 +89,14 @@ Usamos [Conventional Commits](https://www.conventionalcommits.org/es/v1.0.0/):
 <footer opcional: BREAKING CHANGE, Closes #123>
 ```
 
-Tipos comunes: `feat`, `fix`, `docs`, `style`, `refactor`, `chore`.
+Tipos comunes: `feat`, `fix`, `docs`, `style`, `refactor`, `chore`, `ci`.
 
 Ejemplos:
 
 ```
 feat(scripts): agrega instalador de Go con gvm
-fix(postgres): corrige la ruta agregada a /etc/paths.d
-docs: actualiza el orden recomendado en el README
+fix(ruby): corrige la ruta de rbenv en .zprofile
+docs: actualiza el orden recomendado de instalación
 ```
 
 ## Pull Requests
@@ -104,7 +104,7 @@ docs: actualiza el orden recomendado en el README
 - Usa la [plantilla de PR](.github/PULL_REQUEST_TEMPLATE.md) (se carga automáticamente).
 - Un PR por cambio lógico; mantenlos pequeños y enfocados.
 - Vincula los issues relacionados (`Closes #123`).
-- Actualiza el `README.md`, el `CHANGELOG.md` y la documentación en `docs/` cuando corresponda.
+- Verifica que `shellcheck` no reporte errores en los scripts modificados.
 
 ## Revisión de Código
 
@@ -116,12 +116,15 @@ docs: actualiza el orden recomendado en el README
 **Como revisor:**
 
 - Sé respetuoso y específico; sugiere, no impongas.
-- Verifica correctitud, idempotencia, legibilidad y ausencia de secretos.
+- Verifica correctitud, idempotencia, seguridad (uso de `sudo`, descargas) y legibilidad.
 
-## Pruebas
+## Verificación
 
-Este proyecto no tiene una suite de tests automatizada, pero antes de abrir un PR:
+Antes de abrir el PR:
 
-- Ejecuta `shellcheck scripts/*.sh` sin advertencias nuevas.
-- Prueba el script en un macOS limpio (o una cuenta de usuario nueva) cuando sea posible.
-- Verifica que el script sea idempotente ejecutándolo dos veces seguidas.
+```bash
+shellcheck scripts/*.sh           # análisis estático
+shfmt -d -i 2 scripts/*.sh        # diferencias de formato (2 espacios)
+```
+
+Prueba el script afectado en un entorno limpio y documenta los pasos en el PR. Ver [`docs/conventions/quality-tooling.md`](docs/conventions/quality-tooling.md).

@@ -1,69 +1,62 @@
-# Convenciones de Shell Scripting
+# Convenciones de shell scripting
 
-> Reglas y estándares de los scripts de dev-setup-mac-es.
+> Cómo se escribe y estructura un script en dev-setup-mac-es.
 > **Última actualización**: 2026-07-03
 
 ## Alcance
 
-Todos los archivos de `scripts/`. El objetivo es que cualquier script sea
-predecible, legible, idempotente y seguro de ejecutar en un Mac.
-
-## Nombrado
-
-- Formato: `NN-verbo-herramienta.sh` en `kebab-case`.
-- `NN` es un número de dos dígitos que refleja el **orden de instalación**
-  (`01`, `02`, … `13`). Al insertar un script nuevo, renumera los siguientes para
-  mantener la secuencia coherente con el README.
-- El verbo suele ser `instalar` o `configurar` (p. ej. `09-instalar-java.sh`).
+Todos los scripts de la carpeta `scripts/` y los auxiliares de `.github/scripts/`.
 
 ## Estructura de un script
 
-Cada script empieza con la misma cabecera:
-
 ```bash
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
-# Script para instalar y configurar <herramienta> en macOS
+# Script para instalar <herramienta> en macOS
 # Autor: Brayan Diaz C
-# Fecha: <D mmm YYYY>
+# Fecha: <fecha>
 
 echo ""
-```
+echo "🔧 Iniciando la instalación de <herramienta>..."
 
-- **Shebang**: `#!/bin/bash`.
-- **`set -e`**: aborta ante el primer error.
-- **Bloque de comentario**: una línea que describe qué hace el script, más autor y fecha.
+# [1/N] Paso descrito
+...
+
+echo "🎉 <herramienta> instalada correctamente."
+```
 
 ## Reglas
 
-- **Idempotencia**: verifica antes de instalar (`command -v`, `brew list`, comprobar
-  rutas) y no falles si la herramienta ya existe.
+- **Shebang portable**: `#!/usr/bin/env bash`.
+- **Aborta ante errores**: `set -e` al inicio.
+- **Encabezado**: descripción, autor y fecha en comentarios.
+- **Nombre**: `NN-instalar-<herramienta>.sh`, con `NN` de dos dígitos que fija el
+  orden recomendado.
+- **Indentación**: 2 espacios, LF, UTF-8 (ver [`.editorconfig`](../../.editorconfig)).
+- **Idempotencia**: comprueba si algo ya existe antes de instalarlo
+  (`command -v`, `brew list`, `[ -d ... ]`, etc.).
 - **Homebrew primero**: los scripts (salvo el `01`) asumen que Homebrew ya está
   instalado; verifícalo y avisa si falta.
-- **Mensajes claros**: usa `echo` para informar cada paso y para dejar instrucciones
-  de las acciones manuales (reiniciar terminal, inicializar una app, pegar la clave
-  SSH en GitHub).
-- **`sudo` mínimo**: úsalo solo cuando sea imprescindible y díselo al usuario.
-- **Fuentes oficiales y HTTPS**: descarga solo de fuentes oficiales y por HTTPS.
-- **Sin secretos**: nunca incluyas credenciales, tokens ni claves. Ver
-  [secrets.md](secrets.md).
-- **Interacción explícita**: cuando pidas datos (versión, correo, nombre), muestra
-  las opciones disponibles y un valor por defecto razonable.
+- **Progreso legible**: informa cada paso y las acciones manuales pendientes
+  (reiniciar la terminal, inicializar una app, pegar la clave SSH en GitHub).
+- **Mínimo privilegio**: usa `sudo` solo donde sea imprescindible.
+- **Fuentes confiables**: descarga solo de fuentes oficiales y por HTTPS
+  (Homebrew, casks, SDKMAN!, Postgres.app, Docker).
 
-## Verificación antes de contribuir
+## Ejemplo de comprobación idempotente
 
 ```bash
-# Análisis estático
-shellcheck scripts/NN-mi-script.sh
-
-# Idempotencia: ejecútalo dos veces; la segunda no debe romper nada
-./scripts/NN-mi-script.sh
-./scripts/NN-mi-script.sh
+if ! command -v docker &> /dev/null; then
+  echo "Instalando Docker..."
+  # ...
+else
+  echo "✅ Docker ya está instalado."
+fi
 ```
 
 ## Referencias
 
 - [ShellCheck](https://www.shellcheck.net/)
-- [Google Shell Style Guide](https://google.github.io/styleguide/shellguide.html)
-- [ADR 0002 — Gestores de versión por lenguaje](../decisions/0002-gestores-de-version-por-lenguaje.md)
+- [`quality-tooling.md`](quality-tooling.md)
+- [ADR 0003 — Un script por herramienta](../decisions/0003-un-script-por-herramienta.md)

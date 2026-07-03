@@ -1,8 +1,8 @@
 # ==============================================================================
 # Configuración de Dependabot
 # ==============================================================================
-# Este repositorio son scripts de shell sin gestor de paquetes, así que solo se
-# vigilan las GitHub Actions usadas en los workflows (si se añaden).
+# Este repositorio no tiene dependencias empaquetadas; lo único versionable son
+# las GitHub Actions usadas en los workflows de CI.
 # Documentación: https://docs.github.com/code-security/dependabot/dependabot-version-updates
 # ==============================================================================
 

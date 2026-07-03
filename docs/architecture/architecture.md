@@ -1,66 +1,63 @@
-# dev-setup-mac-es — Arquitectura
+# Arquitectura
 
-> Vista de alto nivel de cómo está organizado el repositorio y cómo se reparten
-> las responsabilidades entre los scripts. Para el detalle de qué instala cada
-> uno, ver [`stack.md`](stack.md).
->
+> Cómo está organizado **dev-setup-mac-es**.
 > **Última actualización**: 2026-07-03
 
-## Idea general
+## Panorama general
 
-El proyecto es una **colección de scripts de shell independientes**, uno por
-herramienta. No hay un orquestador central ni estado compartido: cada script se
-ejecuta por sí solo y deja el sistema listo para el siguiente. La numeración del
-nombre (`NN-…`) codifica el **orden recomendado** de instalación.
-
-```mermaid
-graph TD
-    A[01 · Base<br/>Homebrew + CLT] --> B[02-03 · Shell<br/>Zsh + Oh My Zsh]
-    B --> C[04-05 · Control de versiones<br/>Git + SSH]
-    C --> D[06-09 · Lenguajes<br/>Node · Python · Ruby · Java]
-    D --> E[10 · Base de datos<br/>PostgreSQL]
-    E --> F[11 · Contenedores<br/>Docker]
-    F --> G[12 · Infraestructura<br/>Terraform]
-    G --> H[13 · Orquestación<br/>Kubernetes]
-```
-
-## Capas
-
-| Capa                    | Scripts                                  | Responsabilidad                                        |
-| ----------------------- | ---------------------------------------- | ------------------------------------------------------ |
-| Base                    | `01`                                     | Homebrew, Xcode CLT y librerías esenciales del sistema |
-| Shell                   | `02`, `03`                               | Zsh como shell por defecto + Oh My Zsh y plugins       |
-| Control de versiones    | `04`, `05`                               | Git configurado y claves SSH para GitHub               |
-| Lenguajes               | `06`, `07`, `08`, `09`                   | Node, Python, Ruby y Java con gestores por versión     |
-| Base de datos           | `10`                                     | PostgreSQL vía Postgres.app                             |
-| Contenedores            | `11`                                     | Docker Desktop (incluye Compose)                       |
-| Infraestructura         | `12`, `13`                               | Terraform y Kubernetes (kubectl + minikube)            |
+Este proyecto **no es una aplicación**: es una colección de scripts de shell
+independientes que configuran, paso a paso, un entorno de desarrollo completo
+sobre macOS. No hay proceso en ejecución, base de datos ni API; el "artefacto" es
+un sistema operativo configurado.
 
 ## Principios de diseño
 
-- **Independencia**: cada script funciona solo; la única dependencia dura es que
-  Homebrew (del script `01`) esté instalado.
-- **Idempotencia**: los scripts verifican antes de instalar y no rompen si la
-  herramienta ya existe.
-- **Gestores por versión**: los lenguajes se instalan con `nodenv`, `pyenv`,
-  `rbenv` y `SDKMAN!` para poder cambiar de versión sin reinstalar.
-- **Transparencia**: el script informa cada paso y deja claras las acciones
-  manuales pendientes (reiniciar la terminal, inicializar una app, pegar una
-  clave en GitHub).
-- **Espejo con Linux**: la numeración y el conjunto de herramientas replican el
-  repo hermano [`dev-setup-ubuntu-es`](https://github.com/brayandiazc/dev-setup-ubuntu-es).
+- **Un script por herramienta.** Cada tecnología se instala con su propio script,
+  ejecutable de forma independiente.
+- **Orden explícito por numeración.** El prefijo `NN-` indica el orden recomendado
+  de ejecución, pero no obliga: puedes correr solo los que necesites.
+- **Idempotencia donde es posible.** Los scripts comprueban si algo ya está
+  instalado antes de reinstalarlo.
+- **Gestores de versión sobre paquetes del sistema.** Para lenguajes se usan
+  `rbenv`, `nodenv`, `pyenv` y SDKMAN! en lugar de una fórmula global de Homebrew,
+  para poder fijar y cambiar versiones por proyecto.
+- **Homebrew como base.** El script `01` instala Homebrew; el resto lo asume
+  presente.
+- **Transparencia.** Cada script muestra su progreso y no oculta lo que ejecuta
+  con `sudo`.
 
-## Decisiones clave
+## Flujo de ejecución recomendado
 
-| Decisión                                           | Dónde se documenta                                                          |
-| -------------------------------------------------- | -------------------------------------------------------------------------- |
-| Gestores por versión para lenguajes                | [ADR 0002](../decisions/0002-gestores-de-version-por-lenguaje.md)          |
-| Apps de escritorio para PostgreSQL y Docker        | [ADR 0003](../decisions/0003-apps-de-escritorio-para-postgres-y-docker.md) |
+```mermaid
+graph TD
+    A[01 base] --> B[02 zsh]
+    B --> C[03 configurar-zsh]
+    C --> D[04 git]
+    D --> E[05 ssh]
+    E --> F[06 node]
+    F --> G[07 python]
+    G --> H[08 ruby]
+    H --> I[09 java]
+    I --> J[10 postgresql]
+    J --> K[11 docker]
+    K --> L[12 terraform]
+    L --> M[13 kubernetes]
+```
 
-> El detalle y las alternativas de cada decisión se registran como ADRs en
-> [`../decisions/`](../decisions/README.md).
+El orden sigue la saga de entornos de desarrollo del blog: shell y control de
+versiones primero, luego lenguajes, y finalmente base de datos, contenedores e
+infraestructura.
 
-## Referencias
+## Estructura de carpetas
 
-- [`stack.md`](stack.md) — qué instala cada script y con qué método.
-- [`../conventions/shell-scripts.md`](../conventions/shell-scripts.md) — cómo se escriben los scripts.
+```text
+.
+├── scripts/            # Un script por herramienta (NN-instalar-*.sh)
+├── docs/               # Esta documentación
+└── .github/            # Plantillas, automatizaciones y CI
+```
+
+## Inventario de scripts
+
+Ver la tabla completa en el [README](../../README.md#scripts-disponibles) y el
+detalle de tecnologías en [`stack.md`](stack.md).

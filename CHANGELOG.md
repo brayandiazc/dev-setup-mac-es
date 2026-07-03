@@ -19,6 +19,27 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 
 ### Security
 
+## [1.1.0] - 2026-07-03
+
+### Added
+
+- Workflow de CI con ShellCheck (`.github/workflows/ci.yml`) y su documentación.
+- Sistema de labels: `.github/labeler.yml`, `.github/LABELS.md` y
+  `.github/scripts/setup-labels.sh`.
+- Plantillas de issue de Soporte Técnico y Tarea.
+- Convención `docs/conventions/quality-tooling.md` (ShellCheck, shfmt, EditorConfig, CI).
+- `docs/product/roadmap.md` con las próximas herramientas a agregar.
+- ADR `0003-un-script-por-herramienta.md`.
+
+### Changed
+
+- Normalizado el shebang de todos los scripts a `#!/usr/bin/env bash`.
+- Alineada la documentación y la gobernanza con el repo hermano
+  [`dev-setup-ubuntu-es`](https://github.com/brayandiazc/dev-setup-ubuntu-es)
+  para mantenerlos como espejo.
+- ADR `0002` renombrado a `0002-gestores-de-version-para-lenguajes.md`; el ADR de
+  apps de escritorio pasó a `0004`.
+
 ## [1.0.0] - 2026-07-03
 
 ### Added
@@ -54,5 +75,6 @@ Enlaces de comparación entre versiones:
 [0.1.0]: https://github.com/brayandiazc/dev-setup-mac-es/releases/tag/v0.1.0
 -->
 
-[Unreleased]: https://github.com/brayandiazc/dev-setup-mac-es/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/brayandiazc/dev-setup-mac-es/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/brayandiazc/dev-setup-mac-es/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/brayandiazc/dev-setup-mac-es/releases/tag/v1.0.0

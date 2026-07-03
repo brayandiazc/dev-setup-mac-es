@@ -2,8 +2,8 @@
 
 Instaladores automatizados para configurar un entorno completo de desarrollo en macOS, con herramientas modernas y gestionadas por versión: `zsh`, `git`, `ssh`, `node`, `python`, `ruby`, `java`, `postgresql`, `docker`, `terraform` y `kubernetes`.
 
-![Platform](https://img.shields.io/badge/platform-macOS-black)
-![Shell](https://img.shields.io/badge/shell-bash%20%7C%20zsh-4EAA25)
+![Shell](https://img.shields.io/badge/shell-bash-121011?logo=gnu-bash&logoColor=white)
+![Platform](https://img.shields.io/badge/platform-macOS-000000?logo=apple&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
 > El orden de los scripts sigue la saga de entornos de desarrollo de [brayandiazc.com](https://brayandiazc.com), donde cada herramienta tiene su artículo paso a paso. Su repo hermano para Linux es [`dev-setup-ubuntu-es`](https://github.com/brayandiazc/dev-setup-ubuntu-es).
@@ -298,13 +298,14 @@ Usa los scripts en orden secuencial solo si configuras un sistema desde cero; ta
 
 La documentación del proyecto vive en [`docs/`](docs/README.md):
 
-| Documento                                                                | Responde a                          |
-| ------------------------------------------------------------------------ | ----------------------------------- |
-| [`docs/architecture/architecture.md`](docs/architecture/architecture.md) | ¿Cómo está organizado el repo?      |
-| [`docs/architecture/stack.md`](docs/architecture/stack.md)               | ¿Qué instala cada script?           |
-| [`docs/decisions/`](docs/decisions/README.md)                            | ¿Por qué se tomó cada decisión?     |
-| [`docs/conventions/`](docs/conventions/README.md)                        | ¿Cómo se escriben los scripts aquí? |
-| [`docs/glossary.md`](docs/glossary.md)                                   | ¿Qué significa cada término?        |
+| Documento                                                                | Responde a                                |
+| ------------------------------------------------------------------------ | ----------------------------------------- |
+| [`docs/architecture/architecture.md`](docs/architecture/architecture.md) | ¿Cómo están organizados los scripts?      |
+| [`docs/architecture/stack.md`](docs/architecture/stack.md)               | ¿Qué instala cada uno y con qué método?   |
+| [`docs/decisions/`](docs/decisions/README.md)                            | ¿Por qué tomamos cada decisión?           |
+| [`docs/conventions/`](docs/conventions/README.md)                        | ¿Cómo escribimos y probamos los scripts?  |
+| [`docs/product/roadmap.md`](docs/product/roadmap.md)                     | ¿Qué falta por agregar?                   |
+| [`docs/glossary.md`](docs/glossary.md)                                   | ¿Qué significa cada término?              |
 
 ## Contribución
 

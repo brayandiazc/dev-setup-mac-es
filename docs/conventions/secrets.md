@@ -1,26 +1,28 @@
-# Convenciones de Secretos
+# Convenciones de manejo de secretos
 
-> Reglas de manejo de secretos y credenciales en dev-setup-mac-es.
+> Cómo se tratan claves y credenciales en dev-setup-mac-es.
 > **Última actualización**: 2026-07-03
 
 ## Alcance
 
-Cualquier dato sensible que pueda aparecer al usar o contribuir al proyecto:
-claves SSH, tokens, contraseñas y certificados.
+Claves SSH generadas o usadas por los scripts, y cualquier credencial que un
+contribuidor pueda manejar al probar o extender el proyecto.
 
 ## Reglas
 
-- **Nunca** commitees secretos en texto plano (claves de API, tokens, contraseñas,
-  certificados o claves privadas).
-- Los patrones sensibles (`.env`, `*.pem`, `*.key`, `id_rsa`, `id_ed25519`) están
-  cubiertos por [`.gitignore`](../../.gitignore). No los fuerces al índice.
-- Ningún script debe pedir ni almacenar contraseñas de servicios externos.
-- El script `05-instalar-ssh.sh` genera claves SSH **en la máquina del usuario**:
-  la clave privada nunca sale del equipo y solo la **pública** se pega en GitHub.
-- Si un secreto se filtra por error, **rota el secreto antes de limpiar la historia**:
-  reescribir el historial no basta, asume que ya está comprometido.
+- **Nunca** commitees secretos en texto plano: claves privadas SSH, tokens,
+  contraseñas. El [`.gitignore`](../../.gitignore) excluye `*.pem`, `*.key` e
+  `id_rsa`, pero la responsabilidad final es de quien commitea.
+- La clave **privada** SSH que genera `05-instalar-ssh.sh` **nunca** sale de la
+  máquina. Solo se comparte la clave **pública** con GitHub.
+- Comparte credenciales fuera de banda (nunca por git, email en texto plano ni
+  chat público).
+- Si un secreto se expone por error, **rótalo de inmediato** — asume que ya está
+  comprometido; reescribir la historia no basta.
+- En CI, los secretos viven como **GitHub Actions Secrets** cifrados, no en el
+  repositorio.
 
 ## Referencias
 
-- [SECURITY.md](../../SECURITY.md)
-- [GitHub — Conexión con SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+- [Conectar a GitHub con SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+- [`../../SECURITY.md`](../../SECURITY.md)

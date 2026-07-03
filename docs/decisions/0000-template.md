@@ -7,14 +7,12 @@
 ## Contexto y problema
 
 [Describe el contexto y el problema que motiva la decisión. ¿Qué fuerzas están en
-juego (técnicas, de mantenimiento, de experiencia de usuario)? ¿Qué restricciones
-existen?]
+juego? ¿Qué restricciones existen?]
 
 ## Opciones consideradas
 
 - **[Opción A]** — [descripción breve].
 - **[Opción B]** — [descripción breve].
-- **[Opción C]** — [descripción breve].
 
 ## Decisión
 

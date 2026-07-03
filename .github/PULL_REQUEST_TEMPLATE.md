@@ -4,11 +4,11 @@ Resumen de los cambios y qué problema resuelven.
 
 ## Tipo de Cambio
 
-- [ ] Bug fix (corrige un script existente)
-- [ ] Nuevo script / funcionalidad
-- [ ] Breaking change (rompe la compatibilidad o el orden de instalación)
+- [ ] Corrección de bug
+- [ ] Nuevo script / herramienta
+- [ ] Mejora de un script existente
 - [ ] Documentación
-- [ ] Configuración / DevOps
+- [ ] Configuración / CI
 
 ## Cambios Realizados
 
@@ -18,24 +18,25 @@ Resumen de los cambios y qué problema resuelven.
 
 ## Instrucciones de Prueba
 
+Entorno usado (cuenta nueva / VM de macOS / Mac de pruebas) y pasos:
+
 1.
 2.
 3.
 
 ## Checklist
 
-- [ ] El script sigue las [convenciones de shell scripting](../docs/conventions/shell-scripts.md)
-- [ ] `shellcheck` no reporta advertencias nuevas
-- [ ] El script es idempotente (probado ejecutándolo dos veces)
-- [ ] Auto-revisión completada
-- [ ] Sin secretos ni credenciales en el diff
-- [ ] Documentación actualizada (README / docs / CHANGELOG) si aplica
+- [ ] Los scripts usan `#!/usr/bin/env bash` y `set -e`
+- [ ] `shellcheck scripts/*.sh` no reporta errores nuevos
+- [ ] Probado en un entorno limpio (no en el sistema principal)
+- [ ] Los scripts son idempotentes donde aplica
+- [ ] Documentación actualizada (README / docs, si aplica)
+- [ ] CHANGELOG actualizado (si aplica)
 
 ## Issues Relacionados
 
 Closes #
-Relates to #
 
 ## Notas para Revisores
 
-Áreas específicas que requieren atención o decisiones de diseño tomadas.
+Áreas específicas que requieren atención (uso de `sudo`, descargas, casks, etc.).

@@ -1,4 +1,4 @@
-# 0003. Apps de escritorio para PostgreSQL y Docker
+# 0004. Apps de escritorio para PostgreSQL y Docker
 
 - **Estado**: Aceptada
 - **Fecha**: 2026-07-03

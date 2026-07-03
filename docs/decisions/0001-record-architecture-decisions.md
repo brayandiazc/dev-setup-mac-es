@@ -6,10 +6,10 @@
 
 ## Contexto y problema
 
-A medida que el proyecto evoluciona se toman decisiones (qué método de instalación
-usar, qué gestor de versiones adoptar, cómo ordenar los scripts) cuyo contexto y
-motivación se pierden con el tiempo. Sin un registro, se repiten debates ya
-resueltos y quien llega nuevo no entiende por qué el repo es como es.
+A medida que el proyecto evoluciona se toman decisiones (cómo instalar cada
+herramienta, en qué orden, desde qué fuentes) cuyo contexto se pierde con el
+tiempo. Sin un registro, se repiten debates ya resueltos y quien llega nuevo no
+entiende por qué las cosas son como son.
 
 ## Opciones consideradas
 
@@ -28,7 +28,6 @@ plantilla [`0000-template.md`](0000-template.md) y se numera secuencialmente.
 **Positivas:**
 
 - El "por qué" de cada decisión queda registrado junto al código.
-- Quien contribuye se pone al día más rápido.
 - Se evita re-litigar decisiones ya tomadas.
 
 **Negativas / costos:**

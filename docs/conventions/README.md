@@ -1,19 +1,19 @@
 # Convenciones
 
 Esta carpeta documenta **cómo trabajamos** en dev-setup-mac-es: reglas y
-estándares transversales que aplican a cualquier script, independientes de la
-herramienta concreta que instale.
+estándares transversales, independientes de cualquier script concreto.
 
 > Diferencia con `docs/architecture/`: aquí van las **reglas** ("cómo se escribe
-> un script"); en `architecture/` va **este** proyecto en concreto ("qué instala
-> cada script").
+> un script"); en `architecture/` va **este** proyecto en concreto ("cómo están
+> organizados los scripts").
 
 ## Convenciones incluidas
 
-| Convención                             | Tema                                       |
-| -------------------------------------- | ------------------------------------------ |
-| [shell-scripts.md](shell-scripts.md)   | Estructura y estilo de los scripts         |
-| [secrets.md](secrets.md)               | Manejo de secretos y credenciales          |
+| Convención                                     | Tema                                     |
+| ---------------------------------------------- | ---------------------------------------- |
+| [shell-scripts.md](shell-scripts.md)           | Cómo se escribe y estructura un script   |
+| [quality-tooling.md](quality-tooling.md)       | ShellCheck, shfmt, EditorConfig y CI     |
+| [secrets.md](secrets.md)                       | Manejo de claves SSH y credenciales      |
 
 ## Agregar una convención
 

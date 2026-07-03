@@ -1,66 +1,37 @@
-# Stack Tecnológico
+# Stack de herramientas
 
-> Fuente de verdad de qué instala cada script y con qué método. Los scripts
-> permiten elegir la versión concreta al ejecutarlos, así que aquí se indica el
-> método de instalación más que un número fijo.
->
+> Qué instala cada script y con qué método.
 > **Última actualización**: 2026-07-03
 
-## Base del sistema
+Este documento inventaría las tecnologías que el proyecto instala. No son
+dependencias del repositorio, sino el resultado de ejecutar los scripts.
 
-| Herramienta               | Método            | Script |
-| ------------------------- | ----------------- | ------ |
-| Homebrew                  | Instalador oficial| `01`   |
-| Xcode Command Line Tools  | `xcode-select`    | `01`   |
-| Librerías de compilación  | Homebrew          | `01`   |
+| #   | Herramienta        | Método de instalación               | Notas                                              |
+| --- | ------------------ | ----------------------------------- | -------------------------------------------------- |
+| 01  | Base del sistema   | Homebrew + Xcode CLT                 | Instala Homebrew y librerías esenciales.           |
+| 02  | Zsh                | Homebrew + Oh My Zsh                 | Fija Zsh como shell por defecto.                   |
+| 03  | Zsh (config)       | Plugins (Homebrew)                   | Tras reiniciar la terminal.                        |
+| 04  | Git                | Homebrew                            | Configura usuario, correo y rama `main`.           |
+| 05  | SSH                | `ssh-keygen`                        | Genera clave RSA 4096 para GitHub.                 |
+| 06  | Node.js            | `nodenv` + `node-build`             | Versión seleccionable.                             |
+| 07  | Python             | `pyenv` + `pyenv-virtualenv`        | Versión seleccionable + pip.                       |
+| 08  | Ruby               | `rbenv` + `ruby-build`              | Versión seleccionable + Bundler.                   |
+| 09  | Java               | SDKMAN! (Temurin LTS)               | Maven/Gradle opcionales vía SDKMAN!.               |
+| 10  | PostgreSQL         | Postgres.app (cask)                 | Añade `psql` al PATH del sistema.                  |
+| 11  | Docker             | Docker Desktop (cask)               | Incluye Docker Compose.                            |
+| 12  | Terraform          | Tap oficial de HashiCorp            | Vía Homebrew.                                       |
+| 13  | Kubernetes         | `kubectl` + `minikube` (Homebrew)   | Para desarrollo local.                             |
 
-## Shell
-
-| Herramienta                | Método   | Script |
-| -------------------------- | -------- | ------ |
-| Zsh                        | Homebrew | `02`   |
-| Oh My Zsh                  | Instalador oficial | `02` |
-| zsh-syntax-highlighting    | Homebrew | `03`   |
-| zsh-autosuggestions        | Homebrew | `03`   |
-
-## Control de versiones
-
-| Herramienta | Método   | Script |
-| ----------- | -------- | ------ |
-| Git         | Homebrew | `04`   |
-| SSH (claves)| `ssh-keygen` (RSA 4096) | `05` |
-
-## Lenguajes
-
-| Lenguaje | Gestor de versión | Método del gestor  | Script |
-| -------- | ----------------- | ------------------ | ------ |
-| Node.js  | `nodenv`          | Homebrew           | `06`   |
-| Python   | `pyenv`           | Homebrew           | `07`   |
-| Ruby     | `rbenv`           | Homebrew           | `08`   |
-| Java     | `SDKMAN!`         | Instalador oficial | `09`   |
-
-## Base de datos, contenedores e infraestructura
-
-| Herramienta | Método                             | Script |
-| ----------- | ---------------------------------- | ------ |
-| PostgreSQL  | Postgres.app (cask `postgres-unofficial`) | `10` |
-| Docker      | Docker Desktop (cask `docker-desktop`)    | `11` |
-| Terraform   | Tap oficial de HashiCorp (Homebrew)       | `12` |
-| kubectl     | Homebrew                           | `13`   |
-| minikube    | Homebrew                           | `13`   |
-
-## Requisitos mínimos
+## Requisitos del entorno
 
 - macOS (Apple Silicon o Intel).
-- Homebrew (lo instala el script `01`).
-- Conexión a internet y permisos de administrador.
+- Acceso `sudo` para algunos pasos.
+- Conexión a internet.
+- Shell `bash` o `zsh`.
 
-## Justificación de elecciones
+## Por qué gestores de versión
 
-| Elección                       | Alternativa descartada        | Razón                                                          |
-| ------------------------------ | ----------------------------- | -------------------------------------------------------------- |
-| Gestores por versión (lenguajes)| Instalar el lenguaje con brew | Poder cambiar de versión por proyecto sin reinstalar           |
-| Postgres.app                   | `postgresql` de Homebrew      | Arranque/parada con un clic y gestión de múltiples versiones   |
-| Docker Desktop                 | `colima` / Docker CLI         | Experiencia estándar con GUI y Compose incluido                |
-
-> Ver los ADRs en [`../decisions/`](../decisions/README.md) para el detalle de estas decisiones.
+Para los lenguajes (Node, Python, Ruby, Java) se prefieren gestores de versión
+(`nodenv`, `pyenv`, `rbenv`, SDKMAN!) en vez de una fórmula global de Homebrew:
+permiten instalar y alternar versiones por proyecto sin chocar con la versión del
+sistema. Ver [ADR 0002](../decisions/0002-gestores-de-version-para-lenguajes.md).
