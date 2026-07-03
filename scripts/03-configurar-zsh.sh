@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 # Script para configurar plugins en Oh My Zsh en macOS

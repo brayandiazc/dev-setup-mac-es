@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 # Script para instalar y configurar Node.js con nodenv en macOS

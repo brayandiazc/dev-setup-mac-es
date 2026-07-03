@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 # Script para instalar kubectl y minikube en macOS con Homebrew
