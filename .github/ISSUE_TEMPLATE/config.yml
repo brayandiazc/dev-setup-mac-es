@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentación del Proyecto
+    url: "https://github.com/brayandiazc/dev-setup-mac-es/tree/main/docs"
+    about: Consulta la documentación completa del proyecto
+  - name: Saga de entornos de desarrollo
+    url: "https://brayandiazc.com"
+    about: Artículos paso a paso de cada herramienta
